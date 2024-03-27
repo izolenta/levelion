@@ -4,6 +4,7 @@ export interface LevelModel {
   width: number,
   height: number,
   sprites: EditorSpriteBlock[]
+  objects: SpecialObjectBlock[]
   top: string | null,
   bottom: string | null,
   left: string | null,
@@ -13,5 +14,21 @@ export interface LevelModel {
 export interface EditorSpriteBlock {
   x: number,
   y: number,
+  width: number,
+  height: number,
   spriteId: string
 }
+
+export interface SpecialObjectBlock {
+  type: SpecialObjectType,
+  x: number,
+  y: number,
+}
+
+export enum SpecialTypes {
+  Wall = 0,
+  Fire = 1,
+  Water = 2,
+}
+
+export type SpecialObjectType = SpecialTypes.Wall | SpecialTypes.Fire | SpecialTypes.Water;

@@ -7,6 +7,7 @@
     padding-bottom: 12px;
     padding-top: 8px;
     height: 36px;
+    border-bottom: 1px solid #fff;
 }
 
 .level-edit-viewport {
@@ -14,4 +15,9 @@
     overflow-y: auto;
     margin-right: 24px;
     scrollbar-width: thin;
+}
+
+.level-edit-body {
+    margin-top: 24px;
+    margin-left: 24px;
 }

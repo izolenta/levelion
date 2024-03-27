@@ -4,6 +4,7 @@
 }
 .sprite-list {
     width: 530px;
+    min-width: 530px;
 }
 .level-editor {
     flex-grow: 1;

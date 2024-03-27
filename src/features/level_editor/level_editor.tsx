@@ -1,5 +1,6 @@
 import EditorToolbar from "./editor_toolbar/editor_toolbar"
 import "./level_editor.css"
+import MainEditorField from "./main_editor_field/main_editor_field"
 const LevelEditor = () => {
   return (
     <div className={'level-edit-container'}>
@@ -8,6 +9,7 @@ const LevelEditor = () => {
       </div>
       <div className={'level-edit-viewport'}>
         <div className={'level-edit-body'}>
+          <MainEditorField/>
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ const unique_id = uuid();
 export interface SpriteListState {
   sprites: SpriteModel[],
   scaleFactor: number,
-  selectedSprite: string | null
+  selectedSpriteId: string | null
 }
 
 const initialState: SpriteListState = {
@@ -22,8 +22,8 @@ const initialState: SpriteListState = {
       name: 'sprite1',
     },
   ],
-  scaleFactor: 3,
-  selectedSprite: null,
+  scaleFactor: 2,
+  selectedSpriteId: null,
 }
 
 export const spriteListSlice = createSlice({
@@ -40,17 +40,31 @@ export const spriteListSlice = createSlice({
       });
     },
     setSelectedSprite: (state, action: PayloadAction<string | null>) => {
-      state.selectedSprite = action.payload;
+      state.selectedSpriteId = action.payload;
     },
     setScaleFactor: (state, action: PayloadAction<number>) => {
       state.scaleFactor = action.payload;
     },
     deleteSprite: (state, action: PayloadAction<string>) => {
       state.sprites = state.sprites.filter((sprite) => sprite.id !== action.payload);
-      if (state.selectedSprite === action.payload) {
-        state.selectedSprite = null;
+      if (state.selectedSpriteId === action.payload) {
+        state.selectedSpriteId = null;
+      }
+    },
+    storeToLocalStorage: (state) => {
+      localStorage.setItem('sprite_list', JSON.stringify(state.sprites));
+    },
+    loadFromLocalStorage: (state) => {
+      const data = localStorage.getItem('sprite_list');
+      if (data) {
+        state.sprites = JSON.parse(data);
       }
     }
+  },
+  selectors: {
+    selectAllSprites: (state) => state.sprites,
+    selectSelectedSprite: (state) => state.sprites.find((sprite) => sprite.id === state.selectedSpriteId),
+    selectSpriteById: (state, id: string) => state.sprites.find((sprite) => sprite.id === id),
   },
 })
 
@@ -61,4 +75,9 @@ export const {
   setScaleFactor
 } = spriteListSlice.actions
 
+export const {
+  selectAllSprites,
+  selectSelectedSprite,
+  selectSpriteById ,
+} = spriteListSlice.selectors
 export default spriteListSlice.reducer

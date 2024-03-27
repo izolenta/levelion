@@ -5,7 +5,8 @@ import { levelEditorSlice } from "../features/level_editor/level_editor_slice"
 
 const rootReducer = combineSlices(spriteListSlice, levelEditorSlice)
 export const store = configureStore({
-  reducer: rootReducer
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 })
 
 export type RootState = ReturnType<typeof store.getState>
