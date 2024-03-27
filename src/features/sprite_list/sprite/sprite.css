@@ -1,0 +1,8 @@
+.sprite {
+    image-rendering: pixelated;
+    margin: 2px;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    padding: 2px;
+}

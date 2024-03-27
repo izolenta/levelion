@@ -1,0 +1,29 @@
+:host {
+  padding: 8px;
+}
+
+.sprite {
+  image-rendering: pixelated;
+  margin: 2px;
+}
+.sprite-list-toolbar {
+  margin-bottom: 8px;
+  padding-bottom: 12px;
+  padding-top: 8px;
+}
+
+.sprite-list-body {
+  min-height: calc(100vh - 110px);
+  margin-top: 8px;
+}
+
+.sprite-list-viewport {
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+  margin-right: 24px;
+  scrollbar-width: thin;
+}
+
+.sprite-list-container {
+  height: 100%;
+}

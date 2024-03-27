@@ -1,0 +1,17 @@
+:host {
+    background-color: beige;
+}
+
+.level-edit-toolbar {
+    margin-bottom: 8px;
+    padding-bottom: 12px;
+    padding-top: 8px;
+    height: 36px;
+}
+
+.level-edit-viewport {
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    margin-right: 24px;
+    scrollbar-width: thin;
+}
