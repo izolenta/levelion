@@ -12,10 +12,7 @@ export interface LevelModel {
 }
 
 export interface EditorSpriteBlock {
-  x: number,
-  y: number,
-  width: number,
-  height: number,
+  rectangle: CommonRectangle,
   spriteId: string
 }
 
@@ -29,6 +26,20 @@ export enum SpecialTypes {
   Wall = 0,
   Fire = 1,
   Water = 2,
+}
+
+export interface CommonRectangle {
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+}
+
+export interface SelectionModel {
+  topX: number,
+  topY: number,
+  bottomX: number,
+  bottomY: number,
 }
 
 export type SpecialObjectType = SpecialTypes.Wall | SpecialTypes.Fire | SpecialTypes.Water;

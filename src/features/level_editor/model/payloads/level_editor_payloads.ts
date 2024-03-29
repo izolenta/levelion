@@ -6,7 +6,12 @@ export interface AddBlockPayload {
   spriteId: string,
 }
 
-export interface DeleteBlockAtPayload {
+export interface CoordinatePayload {
   x: number,
   y: number,
+}
+
+export interface ChangeSelectionPayload {
+  createNew: boolean,
+  coords: CoordinatePayload,
 }

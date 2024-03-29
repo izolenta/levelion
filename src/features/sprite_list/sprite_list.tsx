@@ -1,10 +1,18 @@
 import "./sprite_list.css"
-import { useAppSelector } from "../../app/hooks"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import type { SpriteModel } from "./model/sprite_model"
 import SpriteToolbar from "./sprite_toolbar/sprite_toolbar"
 import Sprite from "./sprite/sprite"
+import { useEffect } from "react"
+import { loadFromLocalStorage } from "./sprite_list_slice"
 
 const SpriteList = () => {
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(loadFromLocalStorage());
+  }, [dispatch]);
 
   const sprites = useAppSelector((state) => state.sprite_list.sprites);
   return (

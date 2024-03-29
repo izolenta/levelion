@@ -9,6 +9,7 @@ body {
   background-color: black;
   scrollbar-color: black #222222;
   scrollbar-width: thin;
+  user-select: none;
 }
 
 code {

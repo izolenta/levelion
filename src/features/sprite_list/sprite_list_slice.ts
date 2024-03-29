@@ -26,6 +26,10 @@ const initialState: SpriteListState = {
   selectedSpriteId: null,
 }
 
+const storeToLocalStorage = (state: SpriteListState) => {
+  localStorage.setItem('sprite_state', JSON.stringify(state));
+}
+
 export const spriteListSlice = createSlice({
   name: 'sprite_list',
   initialState,
@@ -38,26 +42,30 @@ export const spriteListSlice = createSlice({
         }
         state.sprites.push(sprite);
       });
+      storeToLocalStorage(state);
     },
     setSelectedSprite: (state, action: PayloadAction<string | null>) => {
       state.selectedSpriteId = action.payload;
+      storeToLocalStorage(state);
     },
     setScaleFactor: (state, action: PayloadAction<number>) => {
       state.scaleFactor = action.payload;
+      storeToLocalStorage(state);
     },
     deleteSprite: (state, action: PayloadAction<string>) => {
       state.sprites = state.sprites.filter((sprite) => sprite.id !== action.payload);
       if (state.selectedSpriteId === action.payload) {
         state.selectedSpriteId = null;
       }
-    },
-    storeToLocalStorage: (state) => {
-      localStorage.setItem('sprite_list', JSON.stringify(state.sprites));
+      storeToLocalStorage(state);
     },
     loadFromLocalStorage: (state) => {
-      const data = localStorage.getItem('sprite_list');
+      const data = localStorage.getItem('sprite_state');
       if (data) {
-        state.sprites = JSON.parse(data);
+        const loadedState = JSON.parse(data);
+        state.sprites = loadedState.sprites;
+        state.scaleFactor = loadedState.scaleFactor;
+        state.selectedSpriteId = loadedState.selectedSpriteId;
       }
     }
   },
@@ -72,7 +80,8 @@ export const {
   addSprites,
   setSelectedSprite,
   deleteSprite,
-  setScaleFactor
+  setScaleFactor,
+  loadFromLocalStorage,
 } = spriteListSlice.actions
 
 export const {
