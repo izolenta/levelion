@@ -5,7 +5,12 @@ import type { LevelModel, SelectionModel } from "./model/level_model"
 import type { EditorLayerType } from "./model/editor_constants";
 import { EditorLayer } from "./model/editor_constants"
 import { getSpriteByCoords, hasSpriteInArea } from "./routines/level_helper"
-import type { AddBlockPayload, ChangeSelectionPayload, CoordinatePayload } from "./model/payloads/level_editor_payloads"
+import type {
+  AddBlockPayload,
+  ChangeSelectionPayload,
+  CoordinatePayload,
+  FillBlockPayload
+} from "./model/payloads/level_editor_payloads"
 
 const unique_id = uuid();
 export interface LevelEditorState {
@@ -75,6 +80,39 @@ export const levelEditorSlice = createSlice({
         }
       }
     },
+    deleteSelection: (state) => {
+      const level = state.levels.find((level) => level.id === state.currentLevel);
+      const selection = state.selectionModel;
+      if (level && selection) {
+        for (let x = Math.min(selection.topX, selection.bottomX); x <= Math.max(selection.topX, selection.bottomX); x++) {
+          for (let y = Math.min(selection.topY, selection.bottomY); y <= Math.max(selection.topY, selection.bottomY); y++) {
+            const sprite = getSpriteByCoords(level, x, y);
+            if (sprite) {
+              level.sprites = level.sprites.filter((s) => s !== sprite);
+            }
+          }
+        }
+        state.selectionModel = null;
+      }
+    },
+    fillSelection: (state, action:PayloadAction<FillBlockPayload>) => {
+      const level = state.levels.find((level) => level.id === state.currentLevel);
+      const selection = state.selectionModel;
+      if (level && selection) {
+        for (let x = Math.min(selection.topX, selection.bottomX); x <= Math.max(selection.topX, selection.bottomX); x++) {
+          for (let y = Math.min(selection.topY, selection.bottomY); y <= Math.max(selection.topY, selection.bottomY); y++) {
+            if (!getSpriteByCoords(level, x, y)) {
+              level.sprites.push({
+                rectangle: {x: x, y: y, width: action.payload.width, height: action.payload.height},
+                spriteId: action.payload.spriteId,
+              });
+            }
+          }
+        }
+        state.selectionModel = null;
+      }
+
+    },
     doSelection: (state, action: PayloadAction<ChangeSelectionPayload>) => {
       if (state.selectionModel && !action.payload.createNew) {
         state.selectionModel.bottomX = action.payload.coords.x;
@@ -120,6 +158,8 @@ export const {
   changeLayer,
   changeGridDisplayed,
   clearSelection,
+  deleteSelection,
+  fillSelection,
 } = levelEditorSlice.actions
 
 export const { selectCurrentLevel } = levelEditorSlice.selectors

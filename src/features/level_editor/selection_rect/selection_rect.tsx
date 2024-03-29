@@ -8,25 +8,36 @@ import type { FC } from "react";
 import type React from "react"
 import type { CommonRectangle } from "../model/level_model"
 import { useAppDispatch } from "../../../app/hooks"
-import { clearSelection } from "../level_editor_slice"
+import { clearSelection, deleteSelection, fillSelection } from "../level_editor_slice"
+import type { SpriteModel } from "../../sprite_list/model/sprite_model"
 
 export interface SelectionRectProps {
   showButtons: boolean;
-  fillDisabled: boolean;
+  selectedSprite: SpriteModel | undefined;
   selection: CommonRectangle;
   editorScale: number;
 }
-const SelectionRect:FC<SelectionRectProps> = ({showButtons, selection, fillDisabled, editorScale}) => {
+const SelectionRect:FC<SelectionRectProps> = ({showButtons, selection, selectedSprite, editorScale}) => {
 
   const dispatch = useAppDispatch();
-  const clearSelectionClick = (evt: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement>) => {
-    evt.stopPropagation();
+  const clearSelectionClick = () => {
     dispatch(clearSelection());
   }
 
   const panelMouseDown = (evt: React.MouseEvent<HTMLDivElement>) => {
     evt.stopPropagation();
   }
+  const clearSelectedArea = () => {
+    dispatch(deleteSelection());
+  }
+
+  const fillSelectedArea = () => {
+    if (!selectedSprite) {
+      return;
+    }
+    dispatch(fillSelection({width: selectedSprite.width/8, height: selectedSprite.height/8, spriteId: selectedSprite.id}));
+  }
+
   return (
     <div
       className={"ghost-selection"}
@@ -41,13 +52,13 @@ const SelectionRect:FC<SelectionRectProps> = ({showButtons, selection, fillDisab
         <div className={"selection-buttons"}
              onMouseDown={(evt) => panelMouseDown(evt)}>
           <Box display="flex" flexDirection="column" gap={0.5}>
-            <IconButton disabled={fillDisabled} variant="soft">
+            <IconButton disabled={!selectedSprite} variant="soft" onClick={() => fillSelectedArea()}>
               <FormatColorFillIcon />
             </IconButton>
-            <IconButton variant="soft">
+            <IconButton variant="soft" onClick={() => clearSelectedArea()}>
               <DeleteForeverIcon />
             </IconButton>
-            <IconButton variant="soft" onMouseUp={(evt) => clearSelectionClick(evt)}>
+            <IconButton variant="soft" onClick={() => clearSelectionClick()}>
               <ClearIcon />
             </IconButton>
           </Box>

@@ -1,6 +1,6 @@
 import "./main_editor_field.css"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { addBlock, deleteBlock, doSelection, selectCurrentLevel } from "../level_editor_slice"
+import { addBlock, clearSelection, deleteBlock, doSelection, selectCurrentLevel } from "../level_editor_slice"
 import type React from "react";
 import { useMemo, useRef, useState } from "react"
 import {
@@ -52,6 +52,9 @@ const MainEditorField = () => {
   }
 
   const mouseUpAction = (evt: React.MouseEvent<HTMLDivElement>) => {
+    if (!selectionInProgress) {
+      dispatch(clearSelection());
+    }
     if (isMouseDown && evt.button === 0 && selectedSprite && showGhost && !selectionInProgress) {
       dispatch(addBlock({
         x: ghostX,
@@ -139,7 +142,11 @@ const MainEditorField = () => {
         ></img>
       )}
       {selectionRect && (
-        <SelectionRect editorScale={editorScale} selection={selectionRect} showButtons={!isMouseDown} fillDisabled={!selectedSprite}/>
+        <SelectionRect
+          editorScale={editorScale}
+          selection={selectionRect}
+          showButtons={!isMouseDown}
+          selectedSprite={selectedSprite}/>
       )}
     </div>
   );
