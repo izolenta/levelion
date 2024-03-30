@@ -3,8 +3,8 @@
     display: flex;
 }
 .sprite-list {
-    width: 530px;
-    min-width: 530px;
+    min-width: 350px;
+    width: 350px;
 }
 .level-editor {
     flex-grow: 1;

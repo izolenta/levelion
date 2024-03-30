@@ -1,20 +1,24 @@
 import "./sprite_toolbar.css"
-import React, { useEffect, useRef } from "react"
+import type React from "react";
+import { useRef } from "react"
 import type { SpriteModel } from "../model/sprite_model"
 import { v4 as uuid } from "uuid";
 import { getImageDimensions } from "../../../utils/utils"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { addSprites, setScaleFactor } from "../sprite_list_slice"
+import { addSprites, changeDeleteVisibility, setScaleFactor } from "../sprite_list_slice"
 import IconButton from '@mui/joy/IconButton';
 import Box from '@mui/joy/Box';
 import AddIcon from '@mui/icons-material/Add';
 import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
+import { FormControlLabel, FormGroup } from "@mui/material"
+import { Switch } from "@mui/joy"
 
 const SpriteToolbar = () => {
 
   const dispatch = useAppDispatch();
   const scaleFactor = useAppSelector((state) => state.sprite_list.scaleFactor);
+  const deleteVisible = useAppSelector((state) => state.sprite_list.showDeleteButtons);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const openFileLoadDialog = () => {
@@ -57,6 +61,9 @@ const SpriteToolbar = () => {
     dispatch(setScaleFactor(newValue || 3));
   }
 
+  const changeDeleteButtonVisible = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(changeDeleteVisibility(evt.target.checked));
+  }
   return (
     <div>
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'left' }}>
@@ -69,6 +76,15 @@ const SpriteToolbar = () => {
           <Option value={3}>3x</Option>
           <Option value={4}>4x</Option>
         </Select>
+        <FormGroup>
+          <FormControlLabel control={
+            <Switch
+              checked={deleteVisible}
+              onChange={(evt) => changeDeleteButtonVisible(evt)}
+              sx={{marginLeft: '4px'}} />
+          } label="Can remove" labelPlacement="start" sx={{color: 'white'}}/>
+        </FormGroup>
+
       </Box>
       <input
         ref={fileInputRef}

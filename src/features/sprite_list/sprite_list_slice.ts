@@ -9,6 +9,7 @@ export interface SpriteListState {
   sprites: SpriteModel[],
   scaleFactor: number,
   selectedSpriteId: string | null
+  showDeleteButtons: boolean
 }
 
 const initialState: SpriteListState = {
@@ -24,6 +25,7 @@ const initialState: SpriteListState = {
   ],
   scaleFactor: 2,
   selectedSpriteId: null,
+  showDeleteButtons: false,
 }
 
 const storeToLocalStorage = (state: SpriteListState) => {
@@ -51,6 +53,9 @@ export const spriteListSlice = createSlice({
     setScaleFactor: (state, action: PayloadAction<number>) => {
       state.scaleFactor = action.payload;
       storeToLocalStorage(state);
+    },
+    changeDeleteVisibility: (state, action: PayloadAction<boolean>) => {
+      state.showDeleteButtons = action.payload;
     },
     deleteSprite: (state, action: PayloadAction<string>) => {
       state.sprites = state.sprites.filter((sprite) => sprite.id !== action.payload);
@@ -82,6 +87,7 @@ export const {
   deleteSprite,
   setScaleFactor,
   loadFromLocalStorage,
+  changeDeleteVisibility,
 } = spriteListSlice.actions
 
 export const {

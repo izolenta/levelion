@@ -15,6 +15,7 @@ const Sprite: FC<SpriteProps> = ({ sprite}) => {
   const imgRef = useRef<HTMLDivElement>(null);
   const scaleFactor = useAppSelector((state) => state.sprite_list.scaleFactor);
   const isSelected = useAppSelector((state) => state.sprite_list.selectedSpriteId === sprite.id);
+  const canRemove = useAppSelector((state) => state.sprite_list.showDeleteButtons);
   const dispatch = useAppDispatch();
 
   const [hover, setHover] = useState(false);
@@ -54,19 +55,19 @@ const Sprite: FC<SpriteProps> = ({ sprite}) => {
         width={sprite.width * scaleFactor}
         height={sprite.height * scaleFactor}
       />
-      {/*{hover && (*/}
-      {/*  <IconButton sx={{*/}
-      {/*    "--IconButton-size": "8px",*/}
-      {/*    "position": "absolute",*/}
-      {/*    "top": "-6px",*/}
-      {/*    "right": "-6px",*/}
-      {/*    "opacity": "0.9",*/}
-      {/*  }}*/}
-      {/*  variant="soft"*/}
-      {/*  onClick={() => spriteDelete()}>*/}
-      {/*    <CloseIcon sx={{ fontSize: 14 }}/>*/}
-      {/*  </IconButton>*/}
-      {/*)}*/}
+      {hover && canRemove && (
+        <IconButton sx={{
+          "--IconButton-size": "8px",
+          "position": "absolute",
+          "top": "-6px",
+          "right": "-6px",
+          "opacity": "0.9",
+        }}
+        variant="soft"
+        onClick={() => spriteDelete()}>
+          <CloseIcon sx={{ fontSize: 14 }}/>
+        </IconButton>
+      )}
     </div>
   );
 }
