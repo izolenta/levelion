@@ -78,7 +78,7 @@ const SpriteToolbar = () => {
   return (
     <div>
       <Box
-        sx={{ display: "flex", gap: 2, flexWrap: "wrap", alignItems: "left" }}
+        sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", alignItems: "left" }}
       >
         <IconButton variant="soft" onClick={() => openFileLoadDialog()}>
           <AddIcon />
@@ -103,9 +103,9 @@ const SpriteToolbar = () => {
                 sx={{ marginLeft: "4px" }}
               />
             }
-            label="Can remove"
+            label="Del"
             labelPlacement="start"
-            sx={{ color: "white" }}
+            sx={{ color: "white", marginTop: "6px" }}
           />
         </FormGroup>
       </Box>

@@ -3,14 +3,19 @@ export interface LevelModel {
   name: string
   width: number
   height: number
-  sprites: EditorSpriteBlock[]
+  layers: EditorSpriteLayer[]
   objects: SpecialObjectBlock[]
-  top: string | null
-  bottom: string | null
-  left: string | null
-  right: string | null
+  gridPositionX: number
+  gridPositionY: number
+  activeEditLayer: number
+  activeEditGroup: LayerGroupTypes
 }
 
+
+export interface EditorSpriteLayer {
+  sprites: EditorSpriteBlock[]
+  isVisible: boolean
+}
 export interface EditorSpriteBlock {
   rectangle: CommonRectangle
   spriteId: string
@@ -28,6 +33,11 @@ export enum SpecialTypes {
   Water = 2,
 }
 
+export enum LayerGroupTypes {
+  Decorations = 0,
+  Objects = 1,
+}
+
 export interface CommonRectangle {
   x: number
   y: number
@@ -42,7 +52,7 @@ export interface SelectionModel {
   bottomY: number
 }
 
-export type SpecialObjectType =
-  | SpecialTypes.Wall
-  | SpecialTypes.Fire
-  | SpecialTypes.Water
+export type SpecialObjectType = SpecialTypes.Wall | SpecialTypes.Fire | SpecialTypes.Water
+
+export type LayerGroupType = LayerGroupTypes.Decorations | LayerGroupTypes.Objects
+

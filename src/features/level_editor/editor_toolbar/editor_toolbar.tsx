@@ -1,21 +1,28 @@
 import "./editor_toolbar.css"
 import Select from "@mui/joy/Select"
 import Option from "@mui/joy/Option"
-import type React from "react"
+import React, { useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import {
-  changeGridDisplayed,
-  setEditorScaleFactor,
+  changeGridDisplayed, selectCurrentLayerIndex,
+  setEditorScaleFactor
 } from "../level_editor_slice"
 import Box from "@mui/joy/Box"
-import { Switch } from "@mui/joy"
+import { Button, Switch } from "@mui/joy"
+import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
 import { FormControlLabel, FormGroup } from "@mui/material"
+import LayerDialog from "../layer_dialog/layer_dialog"
 const EditorToolbar = () => {
+  const [layerDialog, setLayerDialog] = useState(false)
+
   const editorScaleFactor = useAppSelector(
     state => state.level_editor.editorScaleFactor,
   )
   const gridDisplayed = useAppSelector(
     state => state.level_editor.gridDisplayed,
+  )
+
+  const selectedLayerId = useAppSelector(selectCurrentLayerIndex
   )
   const dispatch = useAppDispatch()
   const changeEditorZoom = (
@@ -34,7 +41,7 @@ const EditorToolbar = () => {
       <Box
         sx={{
           display: "flex",
-          gap: 2,
+          gap: 0.5,
           flexWrap: "wrap",
           alignItems: "left",
           marginLeft: 3,
@@ -57,15 +64,19 @@ const EditorToolbar = () => {
               <Switch
                 checked={gridDisplayed}
                 onChange={evt => updateGridDisplayed(evt)}
-                sx={{ marginLeft: "12px" }}
+                sx={{ marginLeft: "4px" }}
               />
             }
             label="Grid"
             labelPlacement="start"
-            sx={{ color: "white" }}
+            sx={{ color: "white", marginTop: "6px", marginRight: "12px" }}
           />
         </FormGroup>
+          <Button startDecorator={<DynamicFeedIcon />} variant="soft" onClick={() => setLayerDialog(true)}>
+            {selectedLayerId}
+          </Button>
       </Box>
+      <LayerDialog open={layerDialog} onClose={() => setLayerDialog(false)}/>
     </div>
   )
 }

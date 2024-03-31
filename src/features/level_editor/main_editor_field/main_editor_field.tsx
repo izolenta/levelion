@@ -157,23 +157,28 @@ const MainEditorField = () => {
           onMouseEnter={evt => mouseMoved(evt, index)}
         />
       ))}
-      {currentLevel!.sprites.map((block, index) => {
-        const sprite = spriteById(block.spriteId)!
-        return (
-          <img
-            key={index}
-            src={sprite.data}
-            alt={sprite.name}
-            className={"sprite-img"}
-            title={sprite.name}
-            width={sprite.width * editorScale + sprite.width / 8}
-            height={sprite.height * editorScale + sprite.height / 8}
-            style={{
-              left: block.rectangle.x * editorScale * 8 + block.rectangle.x,
-              top: block.rectangle.y * editorScale * 8 + block.rectangle.y,
-            }}
-          ></img>
-        )
+      {currentLevel!.layers.map((layer, index) => {
+        if (!layer.isVisible) {
+          return null
+        }
+        return layer.sprites.map((block, index2) => {
+          const sprite = spriteById(block.spriteId)!
+          return (
+            <img
+              key={`${index}_${index2}`}
+              src={sprite.data}
+              alt={sprite.name}
+              className={"sprite-img"}
+              title={sprite.name}
+              width={sprite.width * editorScale + sprite.width / 8}
+              height={sprite.height * editorScale + sprite.height / 8}
+              style={{
+                left: block.rectangle.x * editorScale * 8 + block.rectangle.x,
+                top: block.rectangle.y * editorScale * 8 + block.rectangle.y,
+              }}
+            ></img>
+          )
+        })
       })}
       {isMouseOver && !!selectedSprite && showGhost && !selectionInProgress && (
         <img
