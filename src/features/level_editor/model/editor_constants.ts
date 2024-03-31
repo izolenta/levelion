@@ -3,4 +3,4 @@ export enum EditorLayer {
   Objects = 1,
 }
 
-export type EditorLayerType = EditorLayer.Sprites | EditorLayer.Objects;
+export type EditorLayerType = EditorLayer.Sprites | EditorLayer.Objects

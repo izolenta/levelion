@@ -5,10 +5,10 @@ export enum SpriteFormat {
 }
 
 export interface SpriteModel {
-  id: string,
-  format: SpriteFormat,
-  width: number,
-  height: number,
-  data: string,
-  name: string,
+  id: string
+  format: SpriteFormat
+  width: number
+  height: number
+  data: string
+  name: string
 }

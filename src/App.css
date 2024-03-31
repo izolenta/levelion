@@ -1,11 +1,11 @@
 .app {
-    margin: 8px 24px 8px 24px;
-    display: flex;
+  margin: 8px 24px 8px 24px;
+  display: flex;
 }
 .sprite-list {
-    min-width: 350px;
-    width: 350px;
+  min-width: 350px;
+  width: 350px;
 }
 .level-editor {
-    flex-grow: 1;
+  flex-grow: 1;
 }

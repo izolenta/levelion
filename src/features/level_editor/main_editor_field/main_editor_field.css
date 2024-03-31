@@ -1,30 +1,30 @@
 .level-edit-tile {
-    border-collapse: collapse;
-    border: 1px dotted #333;
+  border-collapse: collapse;
+  border: 1px dotted #333;
 }
 
 .level-edit-field {
-    display: inline-grid;
-    grid-template-columns: repeat(36, 1fr);
-    grid-template-rows: repeat(18, 1fr);
-    grid-column-gap: 0;
-    grid-row-gap: 0;
-    border: 1px solid #aaa;
-    position: relative;
+  display: inline-grid;
+  grid-template-columns: repeat(36, 1fr);
+  grid-template-rows: repeat(18, 1fr);
+  grid-column-gap: 0;
+  grid-row-gap: 0;
+  border: 1px solid #aaa;
+  position: relative;
 }
 
 .ghost-img {
-    position: absolute;
-    pointer-events: none;
-    z-index: 4;
-    image-rendering: pixelated;
-    opacity: 0.4;
+  position: absolute;
+  pointer-events: none;
+  z-index: 4;
+  image-rendering: pixelated;
+  opacity: 0.4;
 }
 
 .sprite-img {
-    position: absolute;
-    pointer-events: none;
-    z-index: 3;
-    image-rendering: pixelated;
-    opacity: 1;
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+  image-rendering: pixelated;
+  opacity: 1;
 }

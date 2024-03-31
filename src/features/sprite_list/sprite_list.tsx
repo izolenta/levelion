@@ -7,23 +7,22 @@ import { useEffect } from "react"
 import { loadFromLocalStorage } from "./sprite_list_slice"
 
 const SpriteList = () => {
-
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(loadFromLocalStorage());
-  }, [dispatch]);
+    dispatch(loadFromLocalStorage())
+  }, [dispatch])
 
-  const sprites = useAppSelector((state) => state.sprite_list.sprites);
+  const sprites = useAppSelector(state => state.sprite_list.sprites)
   return (
-    <div className={'sprite-list-container'}>
-      <div className={'sprite-list-toolbar'}>
-        <SpriteToolbar/>
+    <div className={"sprite-list-container"}>
+      <div className={"sprite-list-toolbar"}>
+        <SpriteToolbar />
       </div>
-      <div className={'sprite-list-viewport'}>
-        <div className={'sprite-list-body'}>
+      <div className={"sprite-list-viewport"}>
+        <div className={"sprite-list-body"}>
           {sprites.map((sprite: SpriteModel, index: number) => (
-            <Sprite key={index} sprite={sprite}/>
+            <Sprite key={index} sprite={sprite} />
           ))}
         </div>
       </div>
