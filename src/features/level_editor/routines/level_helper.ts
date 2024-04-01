@@ -13,14 +13,7 @@ export const hasSpriteInArea = (
 ) => {
   const currentLayer = level.layers[level.activeEditLayer]
   for (const next of currentLayer.sprites) {
-    if (
-      !(
-        x >= next.rectangle.x + next.rectangle.width ||
-        next.rectangle.x >= x + width ||
-        y >= next.rectangle.y + next.rectangle.height ||
-        next.rectangle.y >= y + height
-      )
-    ) {
+    if (!(x >= next.rectangle.x + next.rectangle.width || next.rectangle.x >= x + width || y >= next.rectangle.y + next.rectangle.height || next.rectangle.y >= y + height)) {
       return true
     }
   }
@@ -29,17 +22,13 @@ export const hasSpriteInArea = (
 
 export const getSpriteByCoords = (level: LevelModel, x: number, y: number) => {
   const currentLayer = level.layers[level.activeEditLayer]
+  let last = null;
   for (const next of currentLayer.sprites) {
-    if (
-      x >= next.rectangle.x &&
-      x < next.rectangle.x + next.rectangle.width &&
-      y >= next.rectangle.y &&
-      y < next.rectangle.y + next.rectangle.height
-    ) {
-      return next
+    if (x >= next.rectangle.x && x < next.rectangle.x + next.rectangle.width && y >= next.rectangle.y && y < next.rectangle.y + next.rectangle.height) {
+      last = next
     }
   }
-  return null
+  return last
 }
 
 export const getRectFromSelection = (

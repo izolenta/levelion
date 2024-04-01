@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import type { SpriteModel } from "./model/sprite_model"
 import { SpriteFormat } from "./model/sprite_model"
 import { v4 as uuid } from "uuid"
+import type { DeleteSpritePayload } from "./model/sprite_list_payloads"
 
 const unique_id = uuid()
 export interface SpriteListState {
@@ -57,11 +58,21 @@ export const spriteListSlice = createSlice({
     changeDeleteVisibility: (state, action: PayloadAction<boolean>) => {
       state.showDeleteButtons = action.payload
     },
-    deleteSprite: (state, action: PayloadAction<string>) => {
-      state.sprites = state.sprites.filter(
-        sprite => sprite.id !== action.payload,
-      )
-      if (state.selectedSpriteId === action.payload) {
+    deleteSprite: (state, action: PayloadAction<DeleteSpritePayload>) => {
+      if (!action.payload.isBulk) {
+        state.sprites = state.sprites.filter(
+          sprite => sprite.id !== action.payload.spriteId,
+        )
+        if (state.selectedSpriteId === action.payload.spriteId) {
+          state.selectedSpriteId = null
+        }
+      }
+      else {
+        const ind1 = state.sprites.findIndex(spr => spr.id === action.payload.spriteId)
+        const ind2 = state.sprites.findIndex(spr => spr.id === state.selectedSpriteId)
+        const start = Math.min(ind1, ind2)
+        const end = Math.max(ind1, ind2)
+        state.sprites = state.sprites.filter((_, i) => i < start || i > end)
         state.selectedSpriteId = null
       }
       storeToLocalStorage(state)

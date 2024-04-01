@@ -1,7 +1,8 @@
 import "./editor_toolbar.css"
 import Select from "@mui/joy/Select"
 import Option from "@mui/joy/Option"
-import React, { useState } from "react"
+import type React from "react";
+import { useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import {
   changeGridDisplayed, selectCurrentLayerIndex,

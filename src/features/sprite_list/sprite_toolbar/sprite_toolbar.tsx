@@ -3,7 +3,6 @@ import type React from "react"
 import { useRef } from "react"
 import type { SpriteModel } from "../model/sprite_model"
 import { v4 as uuid } from "uuid"
-import { getImageDimensions } from "../../../utils/utils"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import {
   addSprites,
@@ -17,6 +16,7 @@ import Select from "@mui/joy/Select"
 import Option from "@mui/joy/Option"
 import { FormControlLabel, FormGroup } from "@mui/material"
 import { Switch } from "@mui/joy"
+import { getImageParams } from "../../../utils/utils"
 
 const SpriteToolbar = () => {
   const dispatch = useAppDispatch()
@@ -44,20 +44,22 @@ const SpriteToolbar = () => {
             reader.readAsDataURL(file)
           })
 
-          const dimensions = await getImageDimensions(dataUrl)
-          const sprite: SpriteModel = {
-            id: uuid(), // Consider using a real UUID generation method here
-            format: file.name.endsWith(".rgba")
-              ? 1
-              : file.name.endsWith(".bitmap")
-                ? 2
-                : 0,
-            width: dimensions.width,
-            height: dimensions.height,
-            data: dataUrl,
-            name: file.name,
+          const params = await getImageParams(dataUrl)
+          if (!params.isAllBlack) {
+            const sprite: SpriteModel = {
+              id: uuid(), // Consider using a real UUID generation method here
+              format: file.name.endsWith(".rgba")
+                ? 1
+                : file.name.endsWith(".bitmap")
+                  ? 2
+                  : 0,
+              width: params.width,
+              height: params.height,
+              data: dataUrl,
+              name: file.name,
+            }
+            data.push(sprite)
           }
-          data.push(sprite)
         } catch (e) {
           console.log("cannot parse:", file.name, e)
         }

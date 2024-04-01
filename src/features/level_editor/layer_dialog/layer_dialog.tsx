@@ -1,5 +1,5 @@
 import { Dialog, DialogTitle, List, ListItem, ListItemButton } from "@mui/material"
-import { FC } from "react"
+import type { FC } from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { addLayer, selectCurrentLayerIndex, selectCurrentLevel } from "../level_editor_slice"
 import LayerDialogItem from "./layer_dialog_item/layer_dialog_item"

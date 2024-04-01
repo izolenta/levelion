@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import type { FC } from "react"
+import type { FC } from "react";
+import type React from "react"
 import { useRef, useState } from "react"
 import type { SpriteModel } from "../model/sprite_model"
 import CloseIcon from "@mui/icons-material/Close"
@@ -33,8 +34,10 @@ const Sprite: FC<SpriteProps> = ({ sprite }) => {
     dispatch(setSelectedSprite(sprite.id))
   }
 
-  function spriteDelete() {
-    dispatch(deleteSprite(sprite.id))
+  function spriteDelete(evt: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement>) {
+    evt.stopPropagation();
+    const mod = evt.getModifierState("Shift")
+    dispatch(deleteSprite({spriteId: sprite.id, isBulk: mod}))
   }
 
   return (
@@ -72,7 +75,7 @@ const Sprite: FC<SpriteProps> = ({ sprite }) => {
             opacity: "0.9",
           }}
           variant="soft"
-          onClick={() => spriteDelete()}
+          onClick={(evt) => spriteDelete(evt)}
         >
           <CloseIcon sx={{ fontSize: 14 }} />
         </IconButton>

@@ -1,4 +1,4 @@
-import { FC } from "react"
+import type { FC } from "react"
 import { ListItem, ListItemButton } from "@mui/material"
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
